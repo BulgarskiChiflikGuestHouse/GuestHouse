@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using GuestHouse.DAL.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace GuestHouse.DAL
 {
@@ -9,6 +10,13 @@ namespace GuestHouse.DAL
         {
 			
         }
+
+        public virtual DbSet<Event> Events { get; set; }
+        public virtual DbSet<Food> Foods { get; set; }
+        public virtual DbSet<Payment> Payments { get; set; }
+        public virtual DbSet<Reservation> Reservations { get; set; }
+        public virtual DbSet<Room> Rooms { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
