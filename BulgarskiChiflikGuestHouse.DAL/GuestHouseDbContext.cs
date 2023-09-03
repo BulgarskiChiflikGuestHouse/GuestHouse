@@ -17,6 +17,8 @@ namespace GuestHouse.DAL
         public virtual DbSet<Reservation> Reservations { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Amenity> Amenities { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{

@@ -1,9 +1,12 @@
-﻿namespace GuestHouse.DAL.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace GuestHouse.DAL.Models
 {
 	public class Food
 	{
-		public int Id { get; set; }
+		public Guid Id { get; set; }
 
+		[Required]
 		public string Name { get; set; }
 
         public decimal Price { get; set; }

@@ -1,4 +1,6 @@
-﻿namespace GuestHouse.DAL.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace GuestHouse.DAL.Models
 {
 	public class Reservation
 	{
@@ -8,6 +10,7 @@
 
         public DateTime EndDate { get; set; }
 
+        [Required]
         public ICollection<Room> Rooms { get; set; }
 
         public ICollection<Food>? Foods { get; set; }
