@@ -10,6 +10,7 @@ builder.Services.AddDbContext<GuestHouseDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddServices();
 
 var app = builder.Build();
 

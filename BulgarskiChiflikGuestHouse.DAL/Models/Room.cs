@@ -1,6 +1,4 @@
-﻿using GuestHouse.DAL.Enums;
-
-namespace GuestHouse.DAL.Models
+﻿namespace GuestHouse.DAL.Models
 {
 	public class Room
 	{

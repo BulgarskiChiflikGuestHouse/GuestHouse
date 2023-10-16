@@ -1,10 +1,10 @@
 ﻿namespace GuestHouse.Web.Models
 {
-    public class RoomModel
+    public class RoomViewModel
     {
-		//public Guid Id { get; set; }
+		public int Id { get; set; }
 
-		public int Number { get; set; }
+        public int Number { get; set; }
 
 		public string? Type { get; set; }
 
@@ -12,7 +12,7 @@
 
 		public decimal Price { get; set; }
 
-		public string ImageSource { get; set; }
+		public List<string> ImagesSource { get; set; } = new List<string>();
 
 		public bool HasBath { get; set; }
 
