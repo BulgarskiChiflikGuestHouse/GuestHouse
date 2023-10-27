@@ -4,8 +4,10 @@ namespace GuestHouse.DAL.Repository
 {
     public interface IRepository
     {
-        public Room GetRommById(int roomId);
+        public Task<Room> GetRommByIdAsync(Guid roomId);
 
-        public List<Room> GetAllRooms();
+        public Task<List<Room>> GetAllRoomsAsync();
+
+        public Task<string> GetRoomTypeAsync(Guid roomId);
     }
 }

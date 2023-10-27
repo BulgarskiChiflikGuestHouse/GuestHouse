@@ -1,4 +1,5 @@
-﻿using GuestHouse.BLL.Service;
+﻿using GuestHouse.BLL.Model;
+using GuestHouse.BLL.Service;
 using GuestHouse.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,92 +14,41 @@ namespace GuestHouse.Web.Controllers
             _roomService = roomService;
         }
 
-        public IActionResult OurRooms()
+        public async Task<IActionResult> OurRooms()
         {
-            var rooms = _roomService.GetAllRooms();
+            var serviceRooms = await _roomService.GetAllRoomsAsync();
 
-            var roomss = new List<RoomViewModel>
+            var viewRooms = serviceRooms.Select(async r => new RoomViewModel
             {
-                new RoomViewModel
+                Id = r.Id,
+                RoomTypeId = r.RoomTypeId,
+                RoomTypeName = await _roomService.GetRoomTypeAsync(r.RoomTypeId),
+                Number = r.Number,
+                Capacity = r.Capacity,
+                Description = r.Description,
+                Price = r.Price,
+                Amenities = (ICollection<AmenityServiceModel>)r.Amenities.Select(a => new AmenityViewModel
                 {
-                    Id = 1,
-                    Number = 1,
-                    Type = "Bedroom",
-                    Beds = 2,
-                    Price = 65,
-                    ImagesSource =
-                    {
-                        "~/img/room-1.jpg",
-                        "~/img/room-2.jpg",
-                    },
-                    HasBath = true,
-                    HasWiFi = true,
-                    Description = "Sandart bedroom with two beds, wifi and a bathroom.",
-                    Rating = 5
-                },
-                new RoomViewModel
+                    Id = a.Id,
+                    Name = a.Name
+                }),
+                ImagesSource = (List<ImageSourceServiceModel>)r.ImagesSources.Select(i => new ImageSourceViewModel
                 {
-                    Id = 2,
-                    Number = 2,
-                    Type = "Single beds",
-                    Beds = 2,
-                    Price = 35,
-                    ImagesSource =
-                    {
-                        "~/img/room-2.jpg",
-                        "~/img/room-1.jpg",
-                        "~/img/room-3.jpg",
-                        "~/img/room-2.jpg"
-                    },
-                    HasBath = true,
-                    HasWiFi = false,
-                    Description = "Standart room with two single beds with a bathroom.",
-                    Rating = 4
-                },
-                new RoomViewModel
-                {
-                    Id = 3,
-                    Number = 3,
-                    Type = "Apartment",
-                    Beds = 4,
-                    Price = 100,
-                    ImagesSource =
-                    {
-                        "~/img/room-3.jpg",
-                    },
-                    HasBath = false,
-                    HasWiFi = true,
-                    Description = "Two room apartment with four beds, wifi, but without a bathroom.",
-                    Rating = 3
-                },
-                new RoomViewModel
-                {
-                    Id = 4,
-                    Number = 4,
-                    Type = "Big Bedroom",
-                    Beds = 1,
-                    Price = 85,
-                    ImagesSource =
-                    {
-                        "~/img/room-1.jpg",
-                        "~/img/room-2.jpg",
-                        "~/img/room-3.jpg",
-                        "~/img/room-2.jpg",
-                        "~/img/room-3.jpg"
-                    },
-                    HasBath = false,
-                    HasWiFi = false,
-                    Description = "Big bedroom with one king size bed, without wifi and bathroom.",
-                    Rating = 2
-                }
-            };
+                    Id=i.Id,
+                    Alt = i.Alt,
+                    Path = i.Path,
+                    RoomId = i.RoomId
+                })
+            });
 
-            return View(rooms);
+            return View(viewRooms);
         }
 
-        public IActionResult RoomDetails(RoomViewModel room)
+        public async Task<IActionResult> RoomDetails(Guid roomId)
         {
-            return View(room);
+            var serviceRoom = await _roomService.GetRommByIdAsync(roomId);
+
+            return View(serviceRoom);
         }
     }
 }

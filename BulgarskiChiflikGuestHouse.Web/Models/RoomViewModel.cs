@@ -1,25 +1,25 @@
-﻿namespace GuestHouse.Web.Models
+﻿using GuestHouse.BLL.Model;
+
+namespace GuestHouse.Web.Models
 {
     public class RoomViewModel
     {
-		public int Id { get; set; }
+		public Guid Id { get; set; }
 
-        public int Number { get; set; }
+        public string Number { get; set; }
 
-		public string? Type { get; set; }
+		public Guid RoomTypeId { get; set; }
 
-		public int Beds { get; set; }
+		public string RoomTypeName { get; set; }
+
+		public int Capacity { get; set; }
 
 		public decimal Price { get; set; }
 
-		public List<string> ImagesSource { get; set; } = new List<string>();
-
-		public bool HasBath { get; set; }
-
-		public bool HasWiFi { get; set; }
+		public List<ImageSourceServiceModel> ImagesSource { get; set; }
+		
+		public ICollection<AmenityServiceModel> Amenities { get; set; } = new HashSet<AmenityServiceModel>();
 
 		public string Description { get; set; }
-
-		public int Rating { get; set; }
 	}
 }

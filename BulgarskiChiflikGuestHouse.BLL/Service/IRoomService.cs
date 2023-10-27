@@ -5,8 +5,9 @@ namespace GuestHouse.BLL.Service
 
     public interface IRoomService
     {
-        public RoomServiceModel GetRommById(int roomId);
+        public Task<RoomServiceModel> GetRommByIdAsync(Guid roomId);
 
-        public List<RoomServiceModel> GetAllRooms();
+        public Task<List<RoomServiceModel>> GetAllRoomsAsync();
+        public Task<string> GetRoomTypeAsync(Guid roomId);
     }
 }

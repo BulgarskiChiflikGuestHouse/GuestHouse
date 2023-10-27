@@ -106,23 +106,23 @@
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="room-item shadow rounded overflow-hidden">
                         <div class="position-relative">
-                            <img class="img-fluid" src="@Url.Content(room.ImagesSource[0])" alt="Main image">
+                            <img class="img-fluid" src="@Url.Content(room.ImagesSource[0].Path)" alt=@room.ImagesSource[0].Alt>
                             <small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">@($"{room.Price:f2} BGN")</small>
                         </div>
                         <div class="p-4 mt-2">
                             <div class="d-flex justify-content-between mb-3">
-                                <h5 class="mb-0">@($"{room.Number}. {room.Type}")</h5>
-                                <div class="ps-2">
+                                <h5 class="mb-0">@($"{room.Number}. {room.RoomTypeName}")</h5>
+                                @* <div class="ps-2">
                                     @for (int i = 0; i < room.Rating; i++)
                                     {
                                         <small class="fa fa-star text-primary"></small>
                                     }
-                                </div>
+                                </div> *@
                             </div>
                             <div class="d-flex mb-3">
-                                <small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>@($"{room.Beds} beds")</small>
-                                <small class="border-end me-3 pe-3"><i class="fa fa-bath text-primary me-2"></i>@(room.HasBath ? "Bathroom" : "No Bathroom")</small>
-                                <small><i class="fa fa-wifi text-primary me-2"></i>@(room.HasWiFi ? "WiFi" : "No WiFi")</small>
+                                <small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>@($"For {room.Capacity} people")</small>
+                                <small class="border-end me-3 pe-3"><i class="fa fa-bath text-primary me-2"></i>@(room.Amenities.Any(a => a.Name == "Separate Bathroom") ? "Bathroom" : "No Bathroom")</small>
+                                <small><i class="fa fa-wifi text-primary me-2"></i>@(room.Amenities.Any(a => a.Name == "WiFi") ? "WiFi" : "No WiFi")</small>
                             </div>
                             <p class="text-body mb-3">@room.Description</p>
                             <div class="d-flex justify-content-between">

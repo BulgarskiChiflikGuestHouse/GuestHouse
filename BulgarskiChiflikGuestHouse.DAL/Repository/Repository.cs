@@ -1,4 +1,5 @@
 ﻿using GuestHouse.DAL.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace GuestHouse.DAL.Repository
 {
@@ -11,16 +12,25 @@ namespace GuestHouse.DAL.Repository
             _guestHouseDbContext = guestHouseDbContext;
         }
 
-        public List<Room> GetAllRooms()
+        public async Task<List<Room>> GetAllRoomsAsync()
         {
-            var rooms = _guestHouseDbContext.Rooms.ToList();
+            var rooms = await _guestHouseDbContext.Rooms.ToListAsync();
 
             return rooms;
         }
 
-        public Room GetRommById(int roomId)
+        public async Task<Room> GetRommByIdAsync(Guid roomId)
         {
-            throw new NotImplementedException();
+            var room = await _guestHouseDbContext.Rooms.FirstOrDefaultAsync(r => r.Id == roomId);
+
+            return room;
+        }
+
+        public async Task<string> GetRoomTypeAsync(Guid roomId)
+        {
+            var roomType = await _guestHouseDbContext.RoomTypes.FirstOrDefaultAsync(r => r.Id == roomId);
+
+            return roomType.Name;
         }
     }
 }

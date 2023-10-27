@@ -1,4 +1,5 @@
 ﻿using GuestHouse.BLL.Model;
+using GuestHouse.DAL.Models;
 using GuestHouse.DAL.Repository;
 
 namespace GuestHouse.BLL.Service
@@ -13,29 +14,61 @@ namespace GuestHouse.BLL.Service
             _repository = repository;
         }
 
-        public List<RoomServiceModel> GetAllRooms()
+        public async Task<List<RoomServiceModel>> GetAllRoomsAsync()
         {
-            //отиди в ДАЛ и вземи всички стаи.
-            // провери дали си логнат
-            // ако си логнат като обикновен, дай само активни стаи
-            // ако си админ, дай всички стаи дори и деактивирани
+            var dbRooms = await _repository.GetAllRoomsAsync();
 
-            var dbRooms = _repository.GetAllRooms();
-
-            var serviceRooms = dbRooms.Select(x => new RoomServiceModel
+            var serviceRooms = dbRooms.Select(r => new RoomServiceModel
             {
-                Id = x.Id,
-                Number = x.Number,
+                Id = r.Id,
+                Number = r.Number,
+                RoomTypeId = r.RoomTypeId,
+                Capacity = r.Capacity,
+                Price = r.Price,
+                Description = r.Description,
+                ImagesSources = (IEnumerable<ImageSource>)r.ImagesSources.Select(i => new ImageSourceServiceModel
+                {
+                    Id = i.Id,
+                    Path = i.Path,
+                    Alt = i.Alt,
+                    RoomId = i.RoomId
+                }),
+                Amenities = (ICollection<Amenity>)r.Amenities.Select(a => new AmenityServiceModel
+                {
+                    Id = a.Id,
+                    Name = a.Name
+                })
             })
             .ToList();
 
             return serviceRooms;
         }
 
-        public RoomServiceModel GetRommById(int roomId)
+        public async Task<RoomServiceModel> GetRommByIdAsync(Guid roomId)
         {
-            //отиди в ДАЛ и вземи стая по ид.
-            return null;
+            var dbroom = await _repository.GetRommByIdAsync(roomId);
+
+            var serviceroom = new RoomServiceModel
+            {
+                Id = dbroom.Id,
+                Number = dbroom.Number,
+                RoomTypeId = dbroom.RoomTypeId,
+                RoomTypeName = await _repository.GetRoomTypeAsync(dbroom.RoomTypeId),
+                Capacity = dbroom.Capacity,
+                Price = dbroom.Price,
+                Description = dbroom.Description,
+                ImagesSources = dbroom.ImagesSources,
+                Amenities = dbroom.Amenities
+            };
+
+            return serviceroom;
+        }
+
+        public async Task<string> GetRoomTypeAsync(Guid roomId)
+        {
+            var roomTypeName = await _repository.GetRoomTypeAsync(roomId);
+
+            return roomTypeName;
         }
     }
 }
