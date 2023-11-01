@@ -22,8 +22,8 @@ namespace GuestHouse.DAL.Models
         public Guid RoomTypeId { get; set; }
         public RoomType RoomType { get; set; }
 
-        public IEnumerable<ImageSource> ImagesSources { get; set; }
+        public IEnumerable<ImageSource> ImagesSources { get; set; } 
 
-        public virtual ICollection<Amenity> Amenities { get; set; } = new HashSet<Amenity>();
+        public virtual ICollection<Amenity> Amenities { get; set; } = new List<Amenity>();
     }
 }

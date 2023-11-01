@@ -18,37 +18,30 @@ namespace GuestHouse.Web.Controllers
         {
             var serviceRooms = await _roomService.GetAllRoomsAsync();
 
-            var viewRooms = serviceRooms.Select(async r => new RoomViewModel
+            var viewRooms = serviceRooms.Select(room => new RoomViewModel
             {
-                Id = r.Id,
-                RoomTypeId = r.RoomTypeId,
-                RoomTypeName = await _roomService.GetRoomTypeAsync(r.RoomTypeId),
-                Number = r.Number,
-                Capacity = r.Capacity,
-                Description = r.Description,
-                Price = r.Price,
-                Amenities = (ICollection<AmenityServiceModel>)r.Amenities.Select(a => new AmenityViewModel
+                Id = room.Id,
+                RoomTypeId = room.RoomTypeId,
+                RoomTypeName = room.RoomTypeName,
+                Number = room.Number,
+                Capacity = room.Capacity,
+                Description = room.Description,
+                Price = room.Price,
+                ImagesSource = room.ImagesSources.Select(image => new ImageSourceServiceModel
                 {
-                    Id = a.Id,
-                    Name = a.Name
-                }),
-                ImagesSource = (List<ImageSourceServiceModel>)r.ImagesSources.Select(i => new ImageSourceViewModel
+                    Id = image.Id,
+                    Alt = image.Alt,
+                    Path = image.Path,
+                    RoomId = image.RoomId
+                }).ToList(),
+                Amenities = room.Amenities.Select(amenity => new AmenityServiceModel
                 {
-                    Id=i.Id,
-                    Alt = i.Alt,
-                    Path = i.Path,
-                    RoomId = i.RoomId
-                })
-            });
+                    Id = amenity.Id,
+                    Name = amenity.Name
+                }).ToList(),
+            }).ToList();
 
             return View(viewRooms);
-        }
-
-        public async Task<IActionResult> RoomDetails(Guid roomId)
-        {
-            var serviceRoom = await _roomService.GetRommByIdAsync(roomId);
-
-            return View(serviceRoom);
         }
     }
 }

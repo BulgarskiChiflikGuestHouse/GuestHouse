@@ -14,7 +14,11 @@ namespace GuestHouse.DAL.Repository
 
         public async Task<List<Room>> GetAllRoomsAsync()
         {
-            var rooms = await _guestHouseDbContext.Rooms.ToListAsync();
+            var rooms = await _guestHouseDbContext.Rooms
+                .Include(room => room.ImagesSources)
+                .Include(room => room.RoomType)
+                .Include(room => room.Amenities)
+                .ToListAsync();
 
             return rooms;
         }

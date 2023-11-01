@@ -8,6 +8,5 @@ namespace GuestHouse.BLL.Service
         public Task<RoomServiceModel> GetRommByIdAsync(Guid roomId);
 
         public Task<List<RoomServiceModel>> GetAllRoomsAsync();
-        public Task<string> GetRoomTypeAsync(Guid roomId);
     }
 }

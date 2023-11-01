@@ -18,26 +18,21 @@ namespace GuestHouse.BLL.Service
         {
             var dbRooms = await _repository.GetAllRoomsAsync();
 
-            var serviceRooms = dbRooms.Select(r => new RoomServiceModel
+            if (dbRooms is null)
             {
-                Id = r.Id,
-                Number = r.Number,
-                RoomTypeId = r.RoomTypeId,
-                Capacity = r.Capacity,
-                Price = r.Price,
-                Description = r.Description,
-                ImagesSources = (IEnumerable<ImageSource>)r.ImagesSources.Select(i => new ImageSourceServiceModel
-                {
-                    Id = i.Id,
-                    Path = i.Path,
-                    Alt = i.Alt,
-                    RoomId = i.RoomId
-                }),
-                Amenities = (ICollection<Amenity>)r.Amenities.Select(a => new AmenityServiceModel
-                {
-                    Id = a.Id,
-                    Name = a.Name
-                })
+                throw new KeyNotFoundException("No rooms found.");
+            }
+
+            var serviceRooms = dbRooms.Select(room => new RoomServiceModel
+            {
+                Id = room.Id,
+                Number = room.Number,
+                RoomTypeId = room.RoomTypeId,
+                Capacity = room.Capacity,
+                Price = room.Price,
+                Description = room.Description,
+                ImagesSources = room.ImagesSources,
+                Amenities = room.Amenities
             })
             .ToList();
 
@@ -53,7 +48,7 @@ namespace GuestHouse.BLL.Service
                 Id = dbroom.Id,
                 Number = dbroom.Number,
                 RoomTypeId = dbroom.RoomTypeId,
-                RoomTypeName = await _repository.GetRoomTypeAsync(dbroom.RoomTypeId),
+                RoomTypeName = dbroom.RoomType.Name,
                 Capacity = dbroom.Capacity,
                 Price = dbroom.Price,
                 Description = dbroom.Description,
@@ -62,13 +57,6 @@ namespace GuestHouse.BLL.Service
             };
 
             return serviceroom;
-        }
-
-        public async Task<string> GetRoomTypeAsync(Guid roomId)
-        {
-            var roomTypeName = await _repository.GetRoomTypeAsync(roomId);
-
-            return roomTypeName;
         }
     }
 }

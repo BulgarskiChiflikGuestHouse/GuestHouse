@@ -1,4 +1,5 @@
-﻿@model List<RoomViewModel>
+﻿@using System.Diagnostics;
+@model List<RoomViewModel>
 @{
     ViewData["Title"] = "Rooms";
 }
@@ -100,15 +101,22 @@
             <h1 class="mb-5">Explore Our <span class="text-primary text-uppercase">Rooms</span></h1>
         </div>
         <div class="row g-4" style="margin-bottom: 3rem">
-            @foreach (var room in Model)
+            @foreach (var room in Model.OrderBy(room => room.Price))
             {
 
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="room-item shadow rounded overflow-hidden">
                         <div class="position-relative">
-                            <img class="img-fluid" src="@Url.Content(room.ImagesSource[0].Path)" alt=@room.ImagesSource[0].Alt>
+                            @if (room.ImagesSource.Any())
+                            {
+                                <img class="img-fluid" src="@Url.Content($"/img/{@room.ImagesSource.First().Path}.jpg")" alt="@room.ImagesSource.First().Alt">
+                            }
+                            else
+                            {
+                                <img class="img-fluid" src="@Url.Content("/img/NoImageAvailable.jpg")" alt="No image available"/>
+                            }
                             <small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">@($"{room.Price:f2} BGN")</small>
-                        </div>
+                            </div>
                         <div class="p-4 mt-2">
                             <div class="d-flex justify-content-between mb-3">
                                 <h5 class="mb-0">@($"{room.Number}. {room.RoomTypeName}")</h5>

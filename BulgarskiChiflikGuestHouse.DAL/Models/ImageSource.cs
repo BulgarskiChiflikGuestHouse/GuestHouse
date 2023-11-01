@@ -14,6 +14,7 @@ namespace GuestHouse.DAL.Models
 
         [ForeignKey(nameof(Room))]
         public Guid RoomId { get; set; }
+
         public Room Room { get; set; }
     }
 }
