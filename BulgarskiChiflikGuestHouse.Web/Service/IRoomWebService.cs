@@ -1,5 +1,4 @@
-﻿using GuestHouse.BLL.Service;
-using GuestHouse.Web.Models;
+﻿using GuestHouse.Web.Models;
 
 namespace GuestHouse.Web.Service
 {

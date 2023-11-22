@@ -16,10 +16,10 @@ namespace GuestHouse.Web.Models
 
 		public decimal Price { get; set; }
 
+		public string Description { get; set; }
+
 		public List<ImageSourceServiceModel> ImagesSource { get; set; }
 		
 		public ICollection<AmenityServiceModel> Amenities { get; set; } = new HashSet<AmenityServiceModel>();
-
-		public string Description { get; set; }
 	}
 }

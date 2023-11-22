@@ -1,7 +1,6 @@
 ﻿using GuestHouse.BLL.Model;
 using GuestHouse.BLL.Service;
 using GuestHouse.Web.Models;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace GuestHouse.Web.Service
 {

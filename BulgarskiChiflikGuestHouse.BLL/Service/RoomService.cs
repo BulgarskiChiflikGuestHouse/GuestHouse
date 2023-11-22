@@ -1,11 +1,10 @@
 ﻿using GuestHouse.BLL.Model;
-using GuestHouse.DAL.Models;
 using GuestHouse.DAL.Repository;
 
 namespace GuestHouse.BLL.Service
 {
 
-    public class RoomService : IRoomService
+	public class RoomService : IRoomService
     {
         private readonly IRepository _repository;
 
@@ -39,9 +38,9 @@ namespace GuestHouse.BLL.Service
             return serviceRooms;
         }
 
-        public async Task<RoomServiceModel> GetRommByIdAsync(Guid roomId)
+        public async Task<RoomServiceModel> GetRoomByIdAsync(Guid roomId)
         {
-            var dbroom = await _repository.GetRommByIdAsync(roomId);
+            var dbroom = await _repository.GetRoomByIdAsync(roomId);
 
             var serviceroom = new RoomServiceModel
             {

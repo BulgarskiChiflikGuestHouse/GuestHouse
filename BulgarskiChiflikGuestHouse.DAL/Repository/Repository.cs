@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GuestHouse.DAL.Repository
 {
-    public class Repository : IRepository
+	public class Repository : IRepository
     {
         private readonly GuestHouseDbContext _guestHouseDbContext;
 
@@ -23,7 +23,7 @@ namespace GuestHouse.DAL.Repository
             return rooms;
         }
 
-        public async Task<Room> GetRommByIdAsync(Guid roomId)
+        public async Task<Room> GetRoomByIdAsync(Guid roomId)
         {
             var room = await _guestHouseDbContext.Rooms.FirstOrDefaultAsync(r => r.Id == roomId);
 

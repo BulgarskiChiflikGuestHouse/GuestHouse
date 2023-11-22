@@ -20,6 +20,7 @@ namespace GuestHouse.DAL.Models
 
         [ForeignKey(nameof(RoomType))]
         public Guid RoomTypeId { get; set; }
+
         public RoomType RoomType { get; set; }
 
         public IEnumerable<ImageSource> ImagesSources { get; set; } 
