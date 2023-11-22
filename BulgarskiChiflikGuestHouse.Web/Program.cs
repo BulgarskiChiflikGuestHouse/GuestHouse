@@ -1,5 +1,6 @@
 using GuestHouse.DAL;
 using GuestHouse.Infrastructure;
+using GuestHouse.Web.Service;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,7 @@ builder.Services.AddDbContext<GuestHouseDbContext>(options =>
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddServices();
+builder.Services.AddScoped<IRoomWebService, RoomWebService>();
 
 var app = builder.Build();
 
