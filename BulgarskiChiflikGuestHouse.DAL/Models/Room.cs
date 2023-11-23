@@ -1,4 +1,5 @@
-﻿using GuestHouse.DAL.Enums;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GuestHouse.DAL.Models
 {
@@ -6,14 +7,24 @@ namespace GuestHouse.DAL.Models
 	{
 		public Guid Id { get; set; }
 
-        public int Number { get; set; }
+        [Required]
+        public string Number { get; set; }
 
-        public string? Type { get; set; }
+        [Required]
+        public int Capacity { get; set; }
 
-        public int Beds { get; set; }
+        [Required]
+        public decimal Price { get; set; }
 
-        public Guid AmenityId { get; set; }
+        public string? Description { get; set; }
 
-        public ICollection<Amenity>? Amenities { get; set; }
+        [ForeignKey(nameof(RoomType))]
+        public Guid RoomTypeId { get; set; }
+
+        public RoomType RoomType { get; set; }
+
+        public IEnumerable<ImageSource> ImagesSources { get; set; } 
+
+        public virtual ICollection<Amenity> Amenities { get; set; } = new List<Amenity>();
     }
 }

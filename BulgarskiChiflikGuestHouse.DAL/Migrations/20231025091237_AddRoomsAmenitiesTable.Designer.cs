@@ -4,6 +4,7 @@ using GuestHouse.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GuestHouse.DAL.Migrations
 {
     [DbContext(typeof(GuestHouseDbContext))]
-    partial class GuestHouseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231025091237_AddRoomsAmenitiesTable")]
+    partial class AddRoomsAmenitiesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -176,15 +179,14 @@ namespace GuestHouse.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Capacity")
+                    b.Property<int>("Beds")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Number")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Number")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -192,31 +194,14 @@ namespace GuestHouse.DAL.Migrations
                     b.Property<Guid?>("ReservationId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("RoomTypeId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ReservationId");
 
-                    b.HasIndex("RoomTypeId");
-
                     b.ToTable("Rooms");
-                });
-
-            modelBuilder.Entity("GuestHouse.DAL.Models.RoomType", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RoomTypes");
                 });
 
             modelBuilder.Entity("GuestHouse.DAL.Models.User", b =>
@@ -279,7 +264,7 @@ namespace GuestHouse.DAL.Migrations
             modelBuilder.Entity("GuestHouse.DAL.Models.ImageSource", b =>
                 {
                     b.HasOne("GuestHouse.DAL.Models.Room", "Room")
-                        .WithMany("ImagesSources")
+                        .WithMany("ImagesSource")
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -301,14 +286,6 @@ namespace GuestHouse.DAL.Migrations
                     b.HasOne("GuestHouse.DAL.Models.Reservation", null)
                         .WithMany("Rooms")
                         .HasForeignKey("ReservationId");
-
-                    b.HasOne("GuestHouse.DAL.Models.RoomType", "RoomType")
-                        .WithMany("Rooms")
-                        .HasForeignKey("RoomTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("RoomType");
                 });
 
             modelBuilder.Entity("GuestHouse.DAL.Models.Reservation", b =>
@@ -320,12 +297,7 @@ namespace GuestHouse.DAL.Migrations
 
             modelBuilder.Entity("GuestHouse.DAL.Models.Room", b =>
                 {
-                    b.Navigation("ImagesSources");
-                });
-
-            modelBuilder.Entity("GuestHouse.DAL.Models.RoomType", b =>
-                {
-                    b.Navigation("Rooms");
+                    b.Navigation("ImagesSource");
                 });
 
             modelBuilder.Entity("GuestHouse.DAL.Models.User", b =>

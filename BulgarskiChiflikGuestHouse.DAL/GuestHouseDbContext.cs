@@ -18,11 +18,15 @@ namespace GuestHouse.DAL
         public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Amenity> Amenities { get; set; }
+        public virtual DbSet<ImageSource> ImageSources { get; set; }
+        public virtual DbSet<RoomType> RoomTypes { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Room>()
+                .HasMany<Amenity>(r => r.Amenities)
+                .WithMany(a => a.Rooms);
 		}
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BulgarskiChiflikGuestHouse.BLL\GuestHouse.BLL.csproj" />
     <ProjectReference Include="..\BulgarskiChiflikGuestHouse.DAL\GuestHouse.DAL.csproj" />
   </ItemGroup>
 
