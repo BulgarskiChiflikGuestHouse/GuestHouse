@@ -13,7 +13,7 @@ namespace GuestHouse.BLL.Service
             _repository = repository;
         }
 
-        public async Task<List<RoomServiceModel>> GetAllRoomsAsync()
+        public async Task<List<RoomServiceModel>> GetAllAsync()
         {
             var dbRooms = await _repository.GetAllRoomsAsync();
 
@@ -38,7 +38,7 @@ namespace GuestHouse.BLL.Service
             return serviceRooms;
         }
 
-        public async Task<RoomServiceModel> GetRoomByIdAsync(Guid roomId)
+        public async Task<RoomServiceModel> GetByIdAsync(Guid roomId)
         {
             var dbroom = await _repository.GetRoomByIdAsync(roomId);
 

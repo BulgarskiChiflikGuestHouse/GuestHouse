@@ -4,8 +4,8 @@ namespace GuestHouse.Web.Service
 {
 	public interface IRoomWebService
 	{
-		Task<List<RoomViewModel>> GetAllRoomsAsync();
+		Task<List<RoomViewModel>> GetAllAsync();
 
-		Task<RoomViewModel> GetRoomByIdAsync(Guid roomId);
+		Task<RoomViewModel> GetByIdAsync(Guid roomId);
 	}
 }

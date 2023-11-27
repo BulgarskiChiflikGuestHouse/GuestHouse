@@ -14,9 +14,9 @@ namespace GuestHouse.Web.Service
 			_roomService = roomService;
 		}
 
-		public async Task<List<RoomViewModel>> GetAllRoomsAsync()
+		public async Task<List<RoomViewModel>> GetAllAsync()
 		{
-			var serviceRooms = await _roomService.GetAllRoomsAsync();
+			var serviceRooms = await _roomService.GetAllAsync();
 
 			var viewRooms = serviceRooms.Select(room => new RoomViewModel
 			{
@@ -46,9 +46,9 @@ namespace GuestHouse.Web.Service
 			return viewRooms;
 		}
 
-		public async Task<RoomViewModel> GetRoomByIdAsync(Guid roomId)
+		public async Task<RoomViewModel> GetByIdAsync(Guid roomId)
 		{
-			var serviceRoom = await _roomService.GetRoomByIdAsync(roomId);
+			var serviceRoom = await _roomService.GetByIdAsync(roomId);
 
 			var viewRoom = new RoomViewModel
 			{
