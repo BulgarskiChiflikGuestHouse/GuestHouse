@@ -1,5 +1,6 @@
 ﻿using GuestHouse.BLL.Model;
 using GuestHouse.BLL.Service;
+using GuestHouse.DAL.Models;
 using GuestHouse.Web.Models;
 
 namespace GuestHouse.Web.Service
@@ -43,6 +44,36 @@ namespace GuestHouse.Web.Service
 			}).ToList();
 
 			return viewRooms;
+		}
+
+		public async Task<RoomViewModel> GetRoomByIdAsync(Guid roomId)
+		{
+			var serviceRoom = await _roomService.GetRoomByIdAsync(roomId);
+
+			var viewRoom = new RoomViewModel
+			{
+				Id = serviceRoom.Id,
+				Number = serviceRoom.Number,
+				RoomTypeName = serviceRoom.RoomTypeName,
+				RoomTypeId = serviceRoom.RoomTypeId,
+				Price = serviceRoom.Price,
+				Capacity = serviceRoom.Capacity,
+				Description = serviceRoom.Description,
+				Amenities = serviceRoom.Amenities.Select(amenity => new AmenityServiceModel
+				{
+					Id = amenity.Id,
+					Name = amenity.Name
+				}).ToList(),
+				ImagesSource = serviceRoom.ImagesSources.Select(image => new ImageSourceServiceModel
+				{
+					Id = image.Id,
+					Alt = image.Alt,
+					Path = image.Path,
+					RoomId = image.RoomId
+				}).ToList()
+			};
+
+			return viewRoom;
 		}
 	}
 }
