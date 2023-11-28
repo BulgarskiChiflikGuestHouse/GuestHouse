@@ -1,0 +1,73 @@
+﻿@model RoomViewModel
+@{
+	ViewData["Title"] = "Room Details";
+}
+
+<body>
+	<div class="container-fluid page-header mb-3 p-0" style="background-image: url(@Url.Content("~/img/GuestHouseFrontalView2.jpg"));">
+		<div class="container-fluid page-header-inner py-5">
+			<div class="container text-center pb-5">
+				<h1 class="display-3 text-white mb-3 animated slideInDown">Room @Model.Number</h1>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid carrousel wow fadeIn" data-wow-delay="0.1s">
+		<div class="row justify-content-center">
+			<div class="col-lg-4 col-12 my-5 mb-lg-0">
+
+				<h5 class="section-title text-start text-primary text-uppercase">Room @Model.Number</h5>
+				<h6 class="mb-4">@Model.Description</h6>
+				<h6 class="mb-4">Room Capacity - @Model.Capacity</h6>
+				<h6 class="mb-4">Room Type - @Model.RoomTypeName</h6>
+				<h6 class="mb-4">Price - @($"{Model.Price:f2} BGN")</h6>
+				<h6 class="mb-2">Amenities:</h6>
+				@if (Model.Amenities.Any())
+				{
+					@foreach (var amenity in Model.Amenities.OrderBy(am => am.Name))
+					{
+						<p class="mb-2">@amenity.Name</p>
+					}
+				}
+				else
+				{
+					<p class="mb-2">Current room has no amenities.</p>
+				}
+
+				@*TODO: Implement "Book this room" button with room booking functionality.*@
+			</div>
+			<div class="col-lg-6 col-12 h-75 w-50">
+				<div id="carouselExample" class="carousel slide">
+					<div class="carousel-inner">
+						<div class="carousel-item active">
+							@foreach (var image in Model.ImagesSource)
+							{
+								<img src="@Url.Content($"/img/{@image.Path}.jpg")" class="d-block w-100" alt="@image.Alt">
+							}
+						</div>
+					</div>
+					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Previous</span>
+					</button>
+					<button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Next</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="lib/wow/wow.min.js"></script>
+	<script src="lib/easing/easing.min.js"></script>
+	<script src="lib/waypoints/waypoints.min.js"></script>
+	<script src="lib/counterup/counterup.min.js"></script>
+	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+	<script src="lib/tempusdominus/js/moment.min.js"></script>
+	<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+	<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+	<script src="js/main.js"></script>
+</body>

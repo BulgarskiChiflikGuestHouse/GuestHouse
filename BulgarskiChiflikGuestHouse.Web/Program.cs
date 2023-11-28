@@ -1,4 +1,6 @@
+using GuestHouse.BLL.Service;
 using GuestHouse.DAL;
+using GuestHouse.DAL.Repository;
 using GuestHouse.Infrastructure;
 using GuestHouse.Web.Service;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +15,8 @@ builder.Services.AddDbContext<GuestHouseDbContext>(options =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddServices();
 builder.Services.AddScoped<IRoomWebService, RoomWebService>();
+builder.Services.AddScoped<IRoomService, RoomService>();
+builder.Services.AddScoped<IRepository, Repository>();
 
 var app = builder.Build();
 

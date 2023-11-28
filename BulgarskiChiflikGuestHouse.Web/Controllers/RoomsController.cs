@@ -12,11 +12,18 @@ namespace GuestHouse.Web.Controllers
 			_roomWebService = roomWebService;
 		}
 
-		public async Task<IActionResult> GetAllRooms()
+		public async Task<IActionResult> GetAll()
         {
-            var rooms = await _roomWebService.GetAllRoomsAsync();
+            var rooms = await _roomWebService.GetAllAsync();
 
             return View(rooms);
+        }
+
+        public async Task<IActionResult> GetById(Guid roomId)
+        {
+            var room = await _roomWebService.GetByIdAsync(roomId);
+
+            return View(room);
         }
     }
 }
